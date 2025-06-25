@@ -1,0 +1,583 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.48415375,
+          -3.33661222
+        ]
+      },
+      "properties": {
+        "nama": "SDN Purwosari Baru 2",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Sedang",
+        "keterangan": "Bangunan terbuat dari kayu dan beton semi permanen dengan kondisi bangunan beberapa bagian kecil mengalami pelapukan",
+        "foto": "SDN Purwosari Baru 2.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.4743042,
+          -3.34579372
+        ]
+      },
+      "properties": {
+        "nama": "Bidan Sarana Kesehatan ",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Tidak layak",
+        "keterangan": "Bangunan Terbuat dari kayu dan beton Semi Permanen dengan kondisi Rusak berat pada atap berlubang dan beberapa bagian mengalami pelapukan ",
+        "foto": "Bidan Sarana Kesehatan.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.48141479,
+          -3.33458257
+        ]
+      },
+      "properties": {
+        "nama": "Musholla atwarah",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan terbuat dari kayu",
+        "foto": "Musholla atwarah.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.4852829,
+          -3.33562112
+        ]
+      },
+      "properties": {
+        "nama": "Musholla Al Muhajirin ",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan terbuat dari kayu",
+        "foto": "Musholla Al Muhajirin.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47463226,
+          -3.34405041
+        ]
+      },
+      "properties": {
+        "nama": "Musholla rahman",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Sedang",
+        "keterangan": "Bangunan terbuat dari beton Permanen dengan kondisi terdapat sedikit kerusakan pada bangian luar",
+        "foto": "Musholla rahman.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47101593,
+          -3.33290648
+        ]
+      },
+      "properties": {
+        "nama": "Musholla At Taqwa",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan Terbuat dari kayu dan beton Semi Permanen ",
+        "foto": "Musholla At Taqwa.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47503662,
+          -3.33972335
+        ]
+      },
+      "properties": {
+        "nama": "Mesjid Nurul Mu'min ",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan Terbuat dari kayu dan beton Semi Permanen ",
+        "foto": "Mesjid Nurul Mu'min.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.4703598,
+          -3.33270025
+        ]
+      },
+      "properties": {
+        "nama": "Jalan Permukiman RT7",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jalan terbuat dari beton permanen  dengan kondisi baik",
+        "foto": "Jalan Permukiman RT7.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46399689,
+          -3.33118367
+        ]
+      },
+      "properties": {
+        "nama": "TPA Ar Rahman",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Sedang",
+        "keterangan": "Bangunan TPA terbuat dari kayu dengan kondisi kayu mengalami pelapukan pada beberapa bagian ",
+        "foto": "TPA Ar Rahman.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.45968628,
+          -3.34292102
+        ]
+      },
+      "properties": {
+        "nama": "Jalan Permukiman RT12",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Rusak Ringan",
+        "keterangan": "jalan terbuat dari material tanah berbatu Kondisi jalan terdapat banyak air tergenang dengan lubang lubang kecil pada sepanjang jalan",
+        "foto": "Jalan Permukiman RT12.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.4599762,
+          -3.34067464
+        ]
+      },
+      "properties": {
+        "nama": "Langgar Al Amin",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Kondisi Bangunan Mushola terbuat dari kayu dan pondasi beton semi permanen ",
+        "foto": "Langgar Al Amin.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46099854,
+          -3.33749485
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan RT10 Parit 8",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jembatan terbuat dari kayu ulin dengan kondisi di bangunya tanpa pagar pengaman dan sedikit berpasir",
+        "foto": "Jembatan RT10 Parit 8.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46125793,
+          -3.33605099
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan Permukiman RT10 Parit 8",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jembatan terbuat dari kayu ulin dengan kondisi di bangunya tanpa pagar pengaman dan sedikit berpasir",
+        "foto": "Jembatan Permukiman RT10 Parit 8.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46160126,
+          -3.33539963
+        ]
+      },
+      "properties": {
+        "nama": "Musholla Al Ikhsan ",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "bangunan terbuat dari kayu dengan kondisi perlengapan bangunan sebagai mushola lengkap",
+        "foto": "Musholla Al Ikhsan .jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46160889,
+          -3.33495355
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan Penduduk RT10",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jembatan terbuat dari kayu ulin dengan kondisi dibangun tanpa pagar pengaman",
+        "foto": "Jalan Permukiman RT 10 Parit 8.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46256256,
+          -3.33093572
+        ]
+      },
+      "properties": {
+        "nama": "Jalan Permukiman RT 10 Parit 8",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "jalan dibangunnya dengan material beton permanen dengan kondisi sedikit berlumut akibat curah hujan yang tinggi",
+        "foto": "Jalan Permukiman RT 10 Parit 8.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.45825195,
+          -3.33328247
+        ]
+      },
+      "properties": {
+        "nama": "Jalan Usaha Tani RT11",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jalan terbuat dari material batuan dengan bahu jalan dibangunnya beton kondisi beberapa bagian jalan tertutupi dahan dan dedaunan  tanpa  mengurangi fungsi ",
+        "foto": "Jalan Usaha Tani RT11.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.45825958,
+          -3.33323288
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan Usahatani RT11",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jembatan terbuat dari kayu ulin dengan kondisi dibangun tanpa adanya pagar pengaman",
+        "foto": "Jembatan Usahatani RT11.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.45970154,
+          -3.32933378
+        ]
+      },
+      "properties": {
+        "nama": "Titian Desa RT11",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "menghindari abrasi jalan sejauh 70 m ini terbuat dari kayu di bangun  diatas sungai, kondisi tidak adanya pagar pengaman ",
+        "foto": "Titian Desa RT11.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46749878,
+          -3.35960388
+        ]
+      },
+      "properties": {
+        "nama": "TPA Al Huda",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Tidak layak",
+        "keterangan": "Kondisi bangunan TPA yang terbuat dari kayu mengalami pelapukan dan kaca jendela yang bolong -bolong",
+        "foto": "TPA Al Huda.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46755981,
+          -3.35974693
+        ]
+      },
+      "properties": {
+        "nama": "Masjid Nurul Huda",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bagunan Mesjid terbuat dari kayu dengan fasilitas lengkap sebagai sarana ibadah",
+        "foto": "Masjid Nurul Huda.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47116089,
+          -3.36056304
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan Sungai Jingah",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jembatan terbuat dari kayu ulin dengan pagar pengaman kondisi jembatan berpasir akibat terbawa oleh angkutan yang melintas",
+        "foto": "Jembatan Sungai Jingah.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47104645,
+          -3.36057067
+        ]
+      },
+      "properties": {
+        "nama": "Jalan Sungai jingah ",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Rusak Ringan",
+        "keterangan": "Jalan terbuat dari materiak pasir putih dan tanah merah dengan kondisi jalan berlubang dan berair",
+        "foto": "Jalan Sungai jingah.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47428131,
+          -3.34495497
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan RT5",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Kondisi Jembatan terbuat dari kayu ulin dengan pagar pengaman ",
+        "foto": "Jembatan RT5.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47623444,
+          -3.33532619
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan Permukiman RT3",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jembatan terbuat dari Kayu ulin dengan adanya pagar pengaman dan struktur baik guna akses penduduk",
+        "foto": "Jembatan Permukiman RT3.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47945404,
+          -3.33788514
+        ]
+      },
+      "properties": {
+        "nama": "Jembatan RT2",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "kondisi jembatan terbuat dari kayu ulin dengan tidak ada dibangun nya pagar pengaman  ",
+        "foto": "Jembatan RT2.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47612762,
+          -3.33528924
+        ]
+      },
+      "properties": {
+        "nama": "Jalan Permukiman RT3 RT5 RT4",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jalan terbuat dari material berbatu dan tanah ",
+        "foto": "Jalan Permukiman RT3 RT5 RT4.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47999573,
+          -3.33465075
+        ]
+      },
+      "properties": {
+        "nama": "Jalan RT2",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Rusak Berat",
+        "keterangan": "kondisi Jalan tertutupi lumpur dan berlubang pada bagian depan sejauh 6 meter dan seterus nya terbuat dari material pasir putih dengan bahu jalan di lapisi beton guna menghindari abrasi ",
+        "foto": "Jalan RT2.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47952271,
+          -3.33430076
+        ]
+      },
+      "properties": {
+        "nama": "Jalan permukiman Rt2",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Jalan terbuat dari material pasir putih dan batuan tanah dengan dibagun bahu jalan dari beton guna mengurangi abrasi",
+        "foto": "Jalan permukiman Rt2.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47670746,
+          -3.33432913
+        ]
+      },
+      "properties": {
+        "nama": "Kantor Desa",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Rusak Ringan",
+        "keterangan": "Kondisi Bagunan Semi Permanen dengan terbuat dari beton dan kayu pada bagian belakang, terdapat lubang selebar 1 meter di dinding dan bagian atap ",
+        "foto": "Kantor Desa.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47566986,
+          -3.33925915
+        ]
+      },
+      "properties": {
+        "nama": "TK Budi Luhur",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Sedang",
+        "keterangan": "Bangunan terbuat dari kayu dengan kondisi beberapa bagian mengalmi pelapukan",
+        "foto": "TK Budi Luhur.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47408295,
+          -3.34495378
+        ]
+      },
+      "properties": {
+        "nama": "SDN Purwosari Baru 1",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan terbuat dari kayu dan beton Semi Permanen",
+        "foto": "SDN Purwosari Baru 1.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.47730255,
+          -3.33524561
+        ]
+      },
+      "properties": {
+        "nama": "SMK Negeri 3 Marabahan",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan terbuat dari kayu dan beton Semi Permanen",
+        "foto": "SMK Negeri 3 Marabahan.jpg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.46212769,
+          -3.33288717
+        ]
+      },
+      "properties": {
+        "nama": "Posyandu Mawar Putih ",
+        "alamat": "Purwosari Baru Kec. Tamban Kab.barito Kuala",
+        "kondisi": "Baik",
+        "keterangan": "Bangunan terbuat dari kayu dan beton Semi Permanen",
+        "foto": "Posyandu Mawar Putih.jpg"
+      }
+    }
+  ]
+}

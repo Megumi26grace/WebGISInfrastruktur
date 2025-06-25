@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>WebGIS Infrastruktur Desa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.9.8/dist/leaflet-search.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; }
+        header {
+            background: #3a86ff;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            background: #264653;
+            padding: 0.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: #457b9d;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background: #2a9d8f;
+        }
+        #map {
+            height: calc(100vh - 130px);
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #eee;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.css" />
+</head>
+<body>
+
+<header>
+    <h2>WebGIS Infrastruktur Desa Purwosari Baru</h2>
+</header>
+
+<nav>
+    <a href="data-lokasi.html">Data Lokasi</a>
+    <a href="index.html">Peta Kondisi Infrastruktur</a>
+    <a href="config.html">Peta Digital</a>
+</nav>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+    var osmHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
+    var stadia = L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png');
+    var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+    var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
+
+    var map = L.map('map', {
+      center: [-3.34, 114.47],
+      zoom: 14,
+      layers: [osm]
+    });
+
+    var baseLayers = {
+      "OpenStreetMap": osm,
+      "Humanitarian OSM": osmHot,
+      "Stadia Outdoors": stadia,
+      "Esri Satellite": esri,
+      "OpenTopoMap": topo
+    };
+
+    var kondisiLayers = {
+      "Baik": L.layerGroup().addTo(map),
+      "Sedang": L.layerGroup().addTo(map),
+      "Rusak Ringan": L.layerGroup().addTo(map),
+      "Rusak Berat": L.layerGroup().addTo(map),
+      "Tidak layak": L.layerGroup().addTo(map)
+    };
+
+    var geojsonLayer = L.geoJSON(null, {
+      onEachFeature: function(feature, layer) {
+        const p = feature.properties;
+        const kategori = p.kondisi;
+        const foto = encodeURIComponent(p.foto || '');
+        const popup = `
+          <strong>${p.nama}</strong><br/>
+          <em>${kategori}</em><br/>
+          ${p.keterangan}<br/>
+          <small>${p.alamat}</small><br/>
+          <img src='img/${foto}' width='200' onerror="this.src='https://via.placeholder.com/200x120?text=No+Image'">
+        `;
+        layer.bindPopup(popup);
+        if (kategori && kondisiLayers[kategori]) {
+          kondisiLayers[kategori].addLayer(layer);
+        }
+      },
+ pointToLayer: function (feature, latlng) {
+    const kondisi = feature.properties.kondisi.trim();
+    let warna;
+
+    switch (kondisi) {
+      case "Baik":
+        warna = "#28a745"; // Hijau
+        break;
+      case "Sedang":
+        warna = "#ffc107"; // Kuning
+        break;
+      case "Rusak Ringan":
+        warna = "#fd7e14"; // Oranye
+        break;
+      case "Rusak Berat":
+        warna = "#dc3545"; // Merah
+        break;
+      case "Tidak layak":
+        warna = "#6c757d"; // Abu-abu
+        break;
+      default:
+        warna = "#007bff"; // Biru (default)
+    }
+        return L.circleMarker(latlng, {
+          radius: 8,
+          fillColor: warna,
+          color: '#000',
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+      }
+    });
+
+    fetch('data/infrastruktur.geojson')
+      .then(res => res.json())
+      .then(data => geojsonLayer.addData(data));
+
+    
+      const batasRTLayers = [];
+
+for (let i = 1; i <= 12; i++) {
+  const no = String(i).padStart(3, '0'); // 001, 002, dst
+  fetch(`batasrt/RT${no}.geojson`)
+    .then(res => res.json())
+    .then(data => {
+      const layer = L.geoJSON(data, {
+        style: {
+          color: "#0000ff",
+          weight: 2,
+          fillOpacity: 0.05
+        },
+        onEachFeature: function (feature, layer) {
+          const nama = feature.properties.nama || `RT ${no}`;
+          layer.bindPopup(`<b>${nama}</b>`);
+        }
+      }).addTo(map);
+      batasRTLayers.push(layer);
+    });
+}
+
+
+
+    L.control.layers(baseLayers, kondisiLayers).addTo(map);
+    L.control.scale().addTo(map);
+//1
+map.locate({setView: true, maxZoom: 16});
+
+map.on('locationfound', function(e) {
+  L.marker(e.latlng).addTo(map)
+    .bindPopup("Lokasi Anda").openPopup();
+});
+
+map.on('locationerror', function(e) {
+  alert("Tidak dapat menemukan lokasi.");
+});
+//1
+        const watermark = L.control({position: 'bottomleft'});
+
+        watermark.onAdd = function(map) {
+        const div = L.DomUtil.create('div', 'arahangin');
+        div.innerHTML = '<img src="png/arahangin.png" style="width:120px; height:auto; opacity:0.7;">';
+        return div;
+    };
+
+    watermark.addTo(map);
+
+// Buat control panel
+    const infoPanel = L.control({position: 'bottomright'});
+
+    infoPanel.onAdd = function(map) {
+        this._div = L.DomUtil.create('div', 'info-panel');
+        this.update();
+        return this._div;
+    };
+
+    infoPanel.update = function(props) {
+        this._div.innerHTML = `
+            <img src="png/purwosaribaru.png" style="width:100%; max-width:150px; margin:5px 0;">
+            <h4>Desa Purwosari Baru</h4>
+            <p>Selamat datang di peta Kondisi infrastruktur desa</p>
+            <p>Kondisi Infrastruktur dibagi menjadi 5 kategori</p>
+            <p>Hijau        = Baik</p>
+            <p>orange       = sedang</p>
+            <p>kuning       = rusak ringan</p>
+            <p>kuning gelap = rusak berat</p>
+            <p>Merah        = Tidak Layak</p>
+        `;
+    };
+
+    infoPanel.addTo(map);
+  </script>
+  <script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
+<script>
+  var miniMap = new L.Control.MiniMap(osm.clone(), { toggleDisplay: true }).addTo(map);
+</script>
+</body>
+</html>

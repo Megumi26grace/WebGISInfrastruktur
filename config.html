@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>WebGIS Infrastruktur Desa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.9.8/dist/leaflet-search.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; }
+        header {
+            background: #3a86ff;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            background: #264653;
+            padding: 0.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: #457b9d;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background: #2a9d8f;
+        }
+        #map {
+            height: calc(100vh - 130px);
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>WebGIS Infrastruktur Desa Purwosari Baru</h2>
+</header>
+
+<nav>
+    <a href="data-lokasi.html">Data Lokasi</a>
+    <a href="index.html">Peta Kondisi Infrastruktur</a>
+    <a href="config.html">Peta Digital</a>
+</nav>
+<head>
+    <meta charset="UTF-8">
+    <title>Konfigurasi Infrastruktur Desa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <style>
+        body { font-family: Arial; margin: 0; padding: 0; }
+        #map { height: 90vh; width: 100%; }
+        header { background: #333; color: #fff; padding: 10px; text-align: center; }
+        .info { padding: 10px; background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <header><h2>Konfigurasi Titik Infrastruktur Desa</h2></header>
+    <div class="info">
+        Klik di peta untuk menambahkan titik baru. Gunakan kontrol gambar untuk menggambar ulang atau hapus.
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+
+    <script>
+        var map = L.map('map').setView([-3.3476300515425685, 114.47057026684308], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            edit: {
+                featureGroup: drawnItems
+            },
+            draw: {
+                polygon: false,
+                polyline: false,
+                rectangle: false,
+                circle: false,
+                circlemarker: false,
+                marker: true
+            }
+        });
+        map.addControl(drawControl);
+
+        map.on(L.Draw.Event.CREATED, function (e) {
+            var layer = e.layer;
+            var latlng = layer.getLatLng();
+
+            var form = prompt("Masukkan Nama Infrastruktur, Jenis, Kondisi, Keterangan (pisahkan dengan koma):Contoh: Jalan RT5, Jalan, Baik, Jalan utama lingkungan");
+
+            if (form) {
+                let [nama, jenis, kondisi, keterangan] = form.split(',');
+                fetch('tambah.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `nama=${nama.trim()}&jenis=${jenis.trim()}&kondisi=${kondisi.trim()}&keterangan=${keterangan.trim()}&latitude=${latlng.lat}&longitude=${latlng.lng}`
+                }).then(res => {
+                    if (res.ok) {
+                        alert('Data berhasil ditambahkan!');
+                        layer.bindPopup(`<b>${nama}</b><br>${keterangan}`).openPopup();
+                        drawnItems.addLayer(layer);
+                    } else {
+                        alert('Gagal menambahkan data.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
