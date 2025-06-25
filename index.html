@@ -45,7 +45,7 @@
             background: #eee;
         }
     </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.css" />
+
 </head>
 <body>
 
@@ -173,18 +173,7 @@ for (let i = 1; i <= 12; i++) {
 
     L.control.layers(baseLayers, kondisiLayers).addTo(map);
     L.control.scale().addTo(map);
-//1
-map.locate({setView: true, maxZoom: 16});
 
-map.on('locationfound', function(e) {
-  L.marker(e.latlng).addTo(map)
-    .bindPopup("Lokasi Anda").openPopup();
-});
-
-map.on('locationerror', function(e) {
-  alert("Tidak dapat menemukan lokasi.");
-});
-//1
         const watermark = L.control({position: 'bottomleft'});
 
         watermark.onAdd = function(map) {
@@ -211,10 +200,10 @@ map.on('locationerror', function(e) {
             <p>Selamat datang di peta Kondisi infrastruktur desa</p>
             <p>Kondisi Infrastruktur dibagi menjadi 5 kategori</p>
             <p>Hijau        = Baik</p>
-            <p>orange       = sedang</p>
-            <p>kuning       = rusak ringan</p>
-            <p>kuning gelap = rusak berat</p>
-            <p>Merah        = Tidak Layak</p>
+            <p>Kuning       = sedang</p>
+            <p>Orenge       = rusak ringan</p>
+            <p>Merah        = rusak berat</p>
+            <p>Hitam        = Tidak Layak</p>
         `;
     };
 
@@ -222,7 +211,6 @@ map.on('locationerror', function(e) {
   </script>
   <script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
 <script>
-  var miniMap = new L.Control.MiniMap(osm.clone(), { toggleDisplay: true }).addTo(map);
 </script>
 </body>
 </html>
