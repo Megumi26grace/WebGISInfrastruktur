@@ -65,7 +65,6 @@
   <script>
     var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
     var osmHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
-    var stadia = L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png');
     var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
     var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
 
@@ -78,9 +77,8 @@
     var baseLayers = {
       "OpenStreetMap": osm,
       "Humanitarian OSM": osmHot,
-      "Stadia Outdoors": stadia,
       "Esri Satellite": esri,
-      "OpenTopoMap": topo
+      "Topografi": topo
     };
 
     var kondisiLayers = {
@@ -160,10 +158,11 @@ for (let i = 1; i <= 12; i++) {
           weight: 2,
           fillOpacity: 0.05
         },
-        onEachFeature: function (feature, layer) {
-          const nama = feature.properties.nama || `RT ${no}`;
-          layer.bindPopup(`<b>${nama}</b>`);
-        }
+        interactive: false                                              // Non Aktifkan Pop Up 
+          //onEachFeature: function (feature, layer) {
+          //const nama = feature.properties.nama || `RT ${no}`;         //Untuk Popup Batas RT RW
+          //layer.bindPopup(`<b>${nama}</b>`);
+          //}
       }).addTo(map);
       batasRTLayers.push(layer);
     });
@@ -184,7 +183,7 @@ for (let i = 1; i <= 12; i++) {
 
     watermark.addTo(map);
 
-// Buat control panel
+// control panel
     const infoPanel = L.control({position: 'bottomright'});
 
     infoPanel.onAdd = function(map) {
@@ -195,7 +194,7 @@ for (let i = 1; i <= 12; i++) {
 
     infoPanel.update = function(props) {
         this._div.innerHTML = `
-            <img src="png/purwosaribaru.png" style="width:100%; max-width:150px; margin:5px 0;">
+            <img src="png/purwosaribaru.png" style="width:50%; max-width:150px; margin:5px 0;">
             <h4>Desa Purwosari Baru</h4>
             <p>Selamat datang di peta Kondisi infrastruktur desa</p>
             <p>Kondisi Infrastruktur dibagi menjadi 5 kategori</p>
