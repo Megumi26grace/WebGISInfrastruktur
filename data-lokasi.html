@@ -1,97 +1,179 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>WebGIS Infrastruktur Desa</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.9.8/dist/leaflet-search.min.css" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; }
-        header {
-            background: #3a86ff;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        nav {
-            background: #264653;
-            padding: 0.5rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            background: #457b9d;
-            border-radius: 5px;
-        }
-        nav a:hover {
-            background: #2a9d8f;
-        }
-        #map {
-            height: calc(100vh - 130px);
-            width: 100%;
-        }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background: #eee;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>WebGIS Infrastruktur Desa</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; }
+    header {
+        background: #3a86ff;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    nav {
+        background: #264653;
+        padding: 0.5rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        background: #457b9d;
+        border-radius: 5px;
+    }
+    nav a:hover {
+        background: #2a9d8f;
+    }
+    .export-buttons {
+      text-align: center;
+      margin: 1rem;
+    }
+    button {
+      background: #3a86ff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #265cb4;
+    }
+    table img {
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <h2>WebGIS Infrastruktur Desa Purwosari Baru</h2>
+  <h2>WebGIS Infrastruktur Desa Purwosari Baru</h2>
 </header>
 
 <nav>
-    <a href="data-lokasi.html">Data Lokasi</a>
-    <a href="index.html">Peta Kondisi Infrastruktur</a>
-    <a href="config.html">Peta Digital</a>
+  <a href="data-lokasi.html">Data Lokasi</a>
+  <a href="index.html">Peta Kondisi Infrastruktur</a>
+  <a href="config.html">Peta Digital</a>
 </nav>
-<head>
-  <meta charset="utf-8">
-  <title>Data Lokasi Infrastruktur</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-</head>
-<body>
 
-  <h2 style="text-align:center;">Tabel Data Infrastruktur</h2>
-  <table id="tabel" class="display" style="width:100%">
-    <thead>
-      <tr><th>No</th><th>Nama</th><th>Kondisi</th><th>Alamat</th><th>Keterangan</th><th>Foto</th></tr>
-    </thead>
-    <tbody id="data-body"></tbody>
-  </table>
-  <script>
-    fetch('data/infrastruktur.geojson')
-    .then(res => res.json())
-    .then(json => {
-      let no = 1;
-      let rows = json.features.map(f => {
-        const p = f.properties;
-        return `<tr>
-          <td>${no++}</td>
-          <td>${p.nama}</td>
-          <td>${p.kondisi}</td>
-          <td>${p.alamat}</td>
-          <td>${p.keterangan}</td>
-          <td><img src='img/${p.foto}' width='100' onerror="this.src='https://via.placeholder.com/100x70?text=No+Image'"></td>
-        </tr>`;
-      }).join("");
-      $('#data-body').html(rows);
-      $('#tabel').DataTable();
-    });
-  </script>
+<div class="export-buttons">
+  <button onclick="downloadGeoJSON()">Download GeoJSON</button>
+  <button onclick="downloadPDF()">Download PDF Tabel</button>
+  <button onclick="downloadExcel()">Download Excel</button>
+</div>
+
+<h2 style="text-align:center;">Tabel Data Infrastruktur</h2>
+
+<table id="tabel" class="display" style="width:95%; margin:auto;">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Nama</th>
+      <th>Kondisi</th>
+      <th>Alamat</th>
+      <th>Keterangan</th>
+      <th>Foto</th>
+    </tr>
+  </thead>
+  <tbody id="data-body"></tbody>
+</table>
+
+<!-- SCRIPT -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+let geojsonData = null;
+
+fetch('data/infrastruktur.geojson')
+  .then(res => res.json())
+  .then(json => {
+    geojsonData = json;
+
+    let no = 1;
+    let rows = json.features.map(f => {
+      const p = f.properties;
+      return `<tr>
+        <td>${no++}</td>
+        <td>${p.nama}</td>
+        <td>${p.kondisi}</td>
+        <td>${p.alamat}</td>
+        <td>${p.keterangan}</td>
+        <td><img src='img/${p.foto}' width='100' onerror="this.src='https://via.placeholder.com/100x70?text=No+Image'"></td>
+      </tr>`;
+    }).join("");
+
+    $('#data-body').html(rows);
+    $('#tabel').DataTable();
+  });
+
+// Download GeoJSON
+function downloadGeoJSON() {
+  if (geojsonData) {
+    const blob = new Blob([JSON.stringify(geojsonData, null, 2)], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data-infrastruktur.geojson";
+    a.click();
+  } else {
+    alert("Data belum dimuat!");
+  }
+}
+
+// Download PDF
+function downloadPDF() {
+  html2canvas(document.getElementById("tabel")).then(canvas => {
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const ratio = pageWidth / canvas.width;
+    const imgHeight = canvas.height * ratio;
+    pdf.addImage(imgData, 'PNG', 10, 10, pageWidth - 20, imgHeight);
+    pdf.save("tabel-infrastruktur.pdf");
+  });
+}
+
+// Download Excel
+function downloadExcel() {
+  if (!geojsonData) {
+    alert("Data belum dimuat!");
+    return;
+  }
+
+  const data = geojsonData.features.map((f, i) => {
+    const p = f.properties;
+    return {
+      No: i + 1,
+      Nama: p.nama,
+      Kondisi: p.kondisi,
+      Alamat: p.alamat,
+      Keterangan: p.keterangan
+    };
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Infrastruktur");
+  XLSX.writeFile(workbook, "data-infrastruktur.xlsx");
+}
+</script>
+
 </body>
 </html>
