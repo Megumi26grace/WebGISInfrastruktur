@@ -36,7 +36,7 @@
             background: #2a9d8f;
         }
         #map {
-            height: calc(100vh - 130px);
+            height: calc(100vh - 190px);
             width: 100%;
         }
         footer {
@@ -44,8 +44,24 @@
             padding: 1rem;
             background: #eee;
         }
+        .export-buttons {
+            text-align: center;
+            margin: 10px;
+        }
+        button {
+            background: #3a86ff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #265cb4;
+        }
     </style>
-
 </head>
 <body>
 
@@ -58,11 +74,19 @@
     <a href="index.html">Peta Kondisi Infrastruktur</a>
     <a href="config.html">Peta Digital</a>
 </nav>
-</head>
-<body>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
+
+<div class="export-buttons">
+    <button onclick="downloadMapImage()">Download Gambar Peta</button>
+    <button onclick="downloadMapPDF()">Download PDF Peta</button>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
     var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
     var osmHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
     var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
@@ -106,29 +130,30 @@
           kondisiLayers[kategori].addLayer(layer);
         }
       },
- pointToLayer: function (feature, latlng) {
-    const kondisi = feature.properties.kondisi.trim();
-    let warna;
+      pointToLayer: function (feature, latlng) {
+        const kondisi = feature.properties.kondisi.trim();
+        let warna;
 
-    switch (kondisi) {
-      case "Baik":
-        warna = "#28a745"; // Hijau
-        break;
-      case "Sedang":
-        warna = "#ffc107"; // Kuning
-        break;
-      case "Rusak Ringan":
-        warna = "#fd7e14"; // Oranye
-        break;
-      case "Rusak Berat":
-        warna = "#dc3545"; // Merah
-        break;
-      case "Tidak layak":
-        warna = "#6c757d"; // Abu-abu
-        break;
-      default:
-        warna = "#007bff"; // Biru (default)
-    }
+        switch (kondisi) {
+          case "Baik":
+            warna = "#28a745";
+            break;
+          case "Sedang":
+            warna = "#ffc107";
+            break;
+          case "Rusak Ringan":
+            warna = "#fd7e14";
+            break;
+          case "Rusak Berat":
+            warna = "#dc3545";
+            break;
+          case "Tidak layak":
+            warna = "#6c757d";
+            break;
+          default:
+            warna = "#007bff";
+        }
+
         return L.circleMarker(latlng, {
           radius: 8,
           fillColor: warna,
@@ -144,72 +169,79 @@
       .then(res => res.json())
       .then(data => geojsonLayer.addData(data));
 
-    
-      const batasRTLayers = [];
+    const batasRTLayers = [];
 
-for (let i = 1; i <= 12; i++) {
-  const no = String(i).padStart(3, '0'); // 001, 002, dst
-  fetch(`batasrt/RT${no}.geojson`)
-    .then(res => res.json())
-    .then(data => {
-      const layer = L.geoJSON(data, {
-        style: {
-          color: "#0000ff",
-          weight: 2,
-          fillOpacity: 0.05
-        },
-        interactive: false                                              // Non Aktifkan Pop Up 
-          //onEachFeature: function (feature, layer) {
-          //const nama = feature.properties.nama || `RT ${no}`;         //Untuk Popup Batas RT RW
-          //layer.bindPopup(`<b>${nama}</b>`);
-          //}
-      }).addTo(map);
-      batasRTLayers.push(layer);
-    });
-}
-
-
+    for (let i = 1; i <= 12; i++) {
+      const no = String(i).padStart(3, '0');
+      fetch(`batasrt/RT${no}.geojson`)
+        .then(res => res.json())
+        .then(data => {
+          const layer = L.geoJSON(data, {
+            style: {
+              color: "#0000ff",
+              weight: 2,
+              fillOpacity: 0.05
+            },
+            interactive: false
+          }).addTo(map);
+          batasRTLayers.push(layer);
+        });
+    }
 
     L.control.layers(baseLayers, kondisiLayers).addTo(map);
     L.control.scale().addTo(map);
 
-        const watermark = L.control({position: 'bottomleft'});
-
-        watermark.onAdd = function(map) {
+    const watermark = L.control({position: 'bottomleft'});
+    watermark.onAdd = function(map) {
         const div = L.DomUtil.create('div', 'arahangin');
         div.innerHTML = '<img src="png/arahangin.png" style="width:120px; height:auto; opacity:0.7;">';
         return div;
     };
-
     watermark.addTo(map);
 
-// control panel
     const infoPanel = L.control({position: 'bottomright'});
-
     infoPanel.onAdd = function(map) {
         this._div = L.DomUtil.create('div', 'info-panel');
         this.update();
         return this._div;
     };
-
     infoPanel.update = function(props) {
         this._div.innerHTML = `
             <img src="png/purwosaribaru.png" style="width:50%; max-width:150px; margin:5px 0;">
             <h4>Desa Purwosari Baru</h4>
             <p>Selamat datang di peta Kondisi infrastruktur desa</p>
-            <p>Kondisi Infrastruktur dibagi menjadi 5 kategori</p>
-            <p>Hijau        = Baik</p>
-            <p>Kuning       = sedang</p>
-            <p>Orenge       = rusak ringan</p>
-            <p>Merah        = rusak berat</p>
-            <p>Hitam        = Tidak Layak</p>
+            <p>Kondisi Infrastruktur dibagi menjadi 5 kategori:</p>
+            <p>Hijau = Baik | Kuning = Sedang | Oranye = Rusak Ringan</p>
+            <p>Merah = Rusak Berat | Abu = Tidak Layak</p>
         `;
     };
-
     infoPanel.addTo(map);
-  </script>
-  <script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
-<script>
+
+    // Fungsi Download Peta
+    function downloadMapImage() {
+      const mapContainer = document.getElementById("map");
+      html2canvas(mapContainer).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "peta-infrastruktur.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+    function downloadMapPDF() {
+      const mapContainer = document.getElementById("map");
+      html2canvas(mapContainer).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jspdf.jsPDF({
+          orientation: 'landscape',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
+        });
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save("peta-infrastruktur.pdf");
+      });
+    }
 </script>
+
 </body>
 </html>
