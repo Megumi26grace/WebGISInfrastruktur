@@ -2,10 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>WebGIS Infrastruktur Desa</title>
+    <title>Konfigurasi Infrastruktur Desa</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.9.8/dist/leaflet-search.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; }
@@ -36,13 +35,25 @@
             background: #2a9d8f;
         }
         #map {
-            height: calc(100vh - 130px);
+            height: calc(100vh - 160px);
             width: 100%;
         }
-        footer {
+        .info {
+            padding: 10px;
+            background: #f1f1f1;
             text-align: center;
-            padding: 1rem;
-            background: #eee;
+        }
+        button#downloadBtn {
+            background: #3a86ff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button#downloadBtn:hover {
+            background: #265cb4;
         }
     </style>
 </head>
@@ -57,73 +68,103 @@
     <a href="index.html">Peta Kondisi Infrastruktur</a>
     <a href="config.html">Peta Digital</a>
 </nav>
-<head>
-    <meta charset="UTF-8">
-    <title>Konfigurasi Infrastruktur Desa</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
-    <style>
-        body { font-family: Arial; margin: 0; padding: 0; }
-        #map { height: 90vh; width: 100%; }
-        header { background: #333; color: #fff; padding: 10px; text-align: center; }
-        .info { padding: 10px; background: #f9f9f9; }
-    </style>
-</head>
-<body>
-    <header><h2>Konfigurasi Titik Infrastruktur Desa</h2></header>
-    <div class="info">
-        Klik di peta untuk menambahkan titik baru. Gunakan kontrol gambar untuk menggambar ulang atau hapus.
-    </div>
-    <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<div class="info">
+    Klik di peta untuk menambahkan titik baru. Setelah selesai, klik tombol “Download Titik Baru (GeoJSON)” untuk menyimpan data.
+</div>
 
-    <script>
-        var map = L.map('map').setView([-3.3476300515425685, 114.47057026684308], 14);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+<div id="map"></div>
 
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
 
-        var drawControl = new L.Control.Draw({
-            edit: {
-                featureGroup: drawnItems
-            },
-            draw: {
-                polygon: false,
-                polyline: false,
-                rectangle: false,
-                circle: false,
-                circlemarker: false,
-                marker: true
-            }
+<script>
+    const map = L.map('map').setView([-3.3476, 114.4705], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18
+    }).addTo(map);
+
+    const drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    const drawControl = new L.Control.Draw({
+        edit: { featureGroup: drawnItems },
+        draw: {
+            polygon: false,
+            polyline: false,
+            rectangle: false,
+            circle: false,
+            circlemarker: false,
+            marker: true
+        }
+    });
+    map.addControl(drawControl);
+
+    // GeoJSON kosong untuk menyimpan titik baru
+    let newGeojson = {
+        type: "FeatureCollection",
+        features: []
+    };
+
+    // Load GeoJSON lama (titik lama) jika ada
+    fetch('infrastruktur.geojson')
+        .then(res => res.json())
+        .then(data => {
+            L.geoJSON(data, {
+                onEachFeature: function (feature, layer) {
+                    const prop = feature.properties;
+                    layer.bindPopup(`<b>${prop.nama}</b><br>${prop.keterangan || ''}`);
+                    drawnItems.addLayer(layer);
+                }
+            });
         });
-        map.addControl(drawControl);
 
-        map.on(L.Draw.Event.CREATED, function (e) {
-            var layer = e.layer;
-            var latlng = layer.getLatLng();
+    map.on(L.Draw.Event.CREATED, function (e) {
+        const layer = e.layer;
+        const latlng = layer.getLatLng();
 
-            var form = prompt("Masukkan Nama Infrastruktur, Jenis, Kondisi, Keterangan (pisahkan dengan koma):Contoh: Jalan RT5, Jalan, Baik, Jalan utama lingkungan");
+        const form = prompt("Masukkan Nama Infrastruktur, Jenis, Kondisi, Keterangan (pisahkan dengan koma):\nContoh: Jalan RT5, Jalan, Baik, Jalan utama lingkungan");
 
-            if (form) {
-                let [nama, jenis, kondisi, keterangan] = form.split(',');
-                fetch('tambah.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `nama=${nama.trim()}&jenis=${jenis.trim()}&kondisi=${kondisi.trim()}&keterangan=${keterangan.trim()}&latitude=${latlng.lat}&longitude=${latlng.lng}`
-                }).then(res => {
-                    if (res.ok) {
-                        alert('Data berhasil ditambahkan!');
-                        layer.bindPopup(`<b>${nama}</b><br>${keterangan}`).openPopup();
-                        drawnItems.addLayer(layer);
-                    } else {
-                        alert('Gagal menambahkan data.');
-                    }
-                });
+        if (form) {
+            let [nama, jenis, kondisi, keterangan] = form.split(',');
+
+            let feature = {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [latlng.lng, latlng.lat]
+                },
+                properties: {
+                    nama: nama?.trim() || '',
+                    jenis: jenis?.trim() || '',
+                    kondisi: kondisi?.trim() || '',
+                    keterangan: keterangan?.trim() || ''
+                }
+            };
+
+            newGeojson.features.push(feature);
+
+            layer.bindPopup(`<b>${feature.properties.nama}</b><br>${feature.properties.keterangan}`).openPopup();
+            drawnItems.addLayer(layer);
+
+            // Tampilkan tombol download jika belum ada
+            if (!document.getElementById('downloadBtn')) {
+                const btn = document.createElement('button');
+                btn.id = 'downloadBtn';
+                btn.textContent = 'Download Titik Baru (GeoJSON)';
+                btn.onclick = function () {
+                    const blob = new Blob([JSON.stringify(newGeojson, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'titik-baru.geojson';
+                    a.click();
+                };
+                document.querySelector('.info').appendChild(btn);
             }
-        });
-    </script>
+        }
+    });
+</script>
+
 </body>
 </html>
